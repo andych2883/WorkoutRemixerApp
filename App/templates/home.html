@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block title %}Gym Rat{% endblock %}
+{% block page %}Gym Rat{% endblock %}
+
+{{ super() }}
+
+
+<!-- homepage for logged in users only -->
+{% block content %}
+{% if is_authenticated %}
+
+        <h5 class="center-align"> Welcome back, {{current_user.username}}. Get started by selecting or creating a new routine down below. </h5>
+  
+
+
+{% endif %}
+
+{% endblock %}

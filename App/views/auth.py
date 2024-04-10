@@ -28,13 +28,15 @@ def identify_page():
 def login_action():
     data = request.form
     token = login(data['username'], data['password'])
-    response = redirect(request.referrer)
+    response = render_template('home.html')
+    #response = redirect(request.referrer)
     if not token:
         flash('Bad username or password given'), 401
     else:
         flash('Login Successful')
         set_access_cookies(response, token) 
     return response
+
 
 @auth_views.route('/logout', methods=['GET'])
 def logout_action():
