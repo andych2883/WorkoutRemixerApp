@@ -28,7 +28,7 @@ def identify_page():
 def login_action():
     data = request.form
     token = login(data['username'], data['password'])
-    response = render_template('home.html')
+    response = redirect(url_for('auth_views.home_page'))
     #response = redirect(request.referrer)
     if not token:
         flash('Bad username or password given'), 401
@@ -37,6 +37,10 @@ def login_action():
         set_access_cookies(response, token) 
     return response
 
+@auth_views.route('/home', methods=['GET'])
+@jwt_required()
+def home_page():
+    return render_template('home.html')
 
 @auth_views.route('/logout', methods=['GET'])
 def logout_action():

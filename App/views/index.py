@@ -9,10 +9,7 @@ def index_page():
     return render_template('index.html')
 
 
-@index_views.route('/home', methods=['GET'])
-@jwt_required()
-def home_page():
-    return render_template('home.html')
+
 
 @index_views.route('/init', methods=['GET'])
 def init():
