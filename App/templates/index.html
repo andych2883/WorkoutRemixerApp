@@ -1,24 +1,103 @@
-{% extends "layout.html" %}
-{% block title %}Gym Rat{% endblock %}
-{% block page %}Gym Rat{% endblock %}
+<!doctype html>
+<html>
+  <head>
+  
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+     <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>{% block title %}{% endblock %}</title>
 
-{{ super() }}
+  </head>
+  <body>
+
+{% block styles %}
+    <style>
+
+         body {
+            background-color: black;
+            margin: 0; 
+        }
+
+            .background-container {
+            
+            background-image: url('static/page-back.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 97vh; 
+            width: 100vw;
+            background-attachment: fixed; 
+            margin: 0;
+            padding: 0; 
+        }
+    </style>
+{% endblock %}
+
 
 {% block content %}
-    <!-- <h1 class="center-align">Gym Rat</h1> replace with logo -->
-    
+
+    <div class="background-container">
 
 
-    <div>
+        <div class="row">
 
-        
-    <h4 class="red-text center-align">Start your fitness journey here.</h4>
+           <!-- header slogan -->
+            <div class="col s12 grey-text" style="text-align: center; background-color: black;">Fitness, on your schedule.</div>
+
+           <!-- Let us help you achieve... text-->
+            <div class="col s6 white-text" style="background-color: black; height: 97vh; opacity:0.7;" >
+
+              <img src="static/letushelp.png" style="position: absolute; top: 50%; transform: translateY(-50%); width:45%;">
+              
+            
+            </div>
+
+            <!-- GYMRAT word logo -->
+            <div class="col s6" style="height:97vh;">
+
+                <div style="align-items: center; justify-content: center; display:flex;">
+
+
+
+                  <!-- "position: absolute; top:20%; transform: translateY(-50%); width:40%; " -->
+                  <img src="static/GYMRAT.png" style="position: absolute; top: 20%; transform: translateY(-50%); width:30%;">
+
+
+
+                  <!-- style="display: flex; justify-content: center; align-items: center; background-color: red; position:static;" -->
+                <div> 
+                  <form method="POST" action="/login"> 
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <input placeholder="username" value="bob" name="username" type="text" class="validate" required>
+                        <label for="username">username</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <input placeholder="password"value="bobpass" name="password" type="password" class="validate" required>
+                        <label for="password">Password</label>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn waves-effect waves-light">Login</button>
+                  </form>
+                  </div>
+
+
+                </div>
+                
+                
+
+            </div>
+
+          
+  
+          
 
 
     </div>
-    
-
-
-
 
 {% endblock %}

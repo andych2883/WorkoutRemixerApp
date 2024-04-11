@@ -5,16 +5,17 @@
 {{ super() }}
 
 
+
+
 <!-- homepage for logged in users only -->
 {% block content %}
+ <div class="container">   
     {% if is_authenticated %}
 
             <h5 class="center-align"> Welcome back, {{current_user.username}}. Get started by selecting or creating a new routine down below. </h5>
-    
-
-
+   
     {% else %}
             <h5>Please login to view this page.</h5>
     {% endif %}
-
+</div>     
 {% endblock %}
