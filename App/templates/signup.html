@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block title %}Signup{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3 style="color: white;">Signup</h3>
+    <form action="{{ url_for('auth_views.signup_action') }}" method="POST">
+        <div class="input-field">
+            <input type="text" id="username" name="username" required style="color: white;">
+            <label for="username">Username</label>
+        </div>
+        <div class="input-field">
+            <input type="password" id="password" name="password" required style="color: white;">
+            <label for="password">Password</label>
+        </div>
+        <button class="btn waves-effect waves-light" type="submit">Signup</button>
+    </form>
+</div>
+{% endblock %}
