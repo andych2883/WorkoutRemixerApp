@@ -4,7 +4,7 @@ from flask_jwt_extended import jwt_required, current_user, unset_jwt_cookies, se
 from.index import index_views
 
 from App.controllers import (
-    login
+    login, signup
 )
 
 auth_views = Blueprint('auth_views', __name__, template_folder='../templates')
@@ -12,7 +12,15 @@ auth_views = Blueprint('auth_views', __name__, template_folder='../templates')
 
 '''
 Page/Action Routes
-'''    
+'''
+@auth_views.route('/index', methods=['GET'])
+def index_page():
+    return render_template('index.html')
+
+@auth_views.route('/signup', methods=['GET'])
+def signup_page():
+    return render_template('signup.html')
+
 @auth_views.route('/users', methods=['GET'])
 def get_user_page():
     users = get_all_users()
@@ -22,7 +30,21 @@ def get_user_page():
 @jwt_required()
 def identify_page():
     return render_template('message.html', title="Identify", message=f"You are logged in as {current_user.id} - {current_user.username}")
-    
+
+@auth_views.route('/signup', methods=['POST'])
+def signup_action():
+    data = request.form
+    username = data.get('username')
+    password = data.get('password')
+    if not username or not password:
+        flash('Username and password are required')
+        return redirect(url_for('auth_views.signup_page'))
+    if signup(username, password):
+        flash('Signup successful! Please login.')
+        return redirect(url_for('auth_views.index_page'))
+    else:
+        flash('Username already exists. Please choose a different username.')
+        return redirect(url_for('auth_views.signup_page'))    
 
 @auth_views.route('/login', methods=['POST'])
 def login_action():

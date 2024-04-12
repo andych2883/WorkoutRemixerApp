@@ -2,6 +2,15 @@ from flask_jwt_extended import create_access_token, jwt_required, JWTManager, ge
 
 from App.models import User
 
+def signup(username, password):
+    existing_user = User.query.filter_by(username=username).first()
+    if existing_user:
+        return False  # User already exists
+    new_user = User(username=username)
+    new_user.set_password(password)
+    return True  # Signup successful
+
+
 def login(username, password):
   user = User.query.filter_by(username=username).first()
   if user and user.check_password(password):

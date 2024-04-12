@@ -1,13 +1,13 @@
 {% extends "layout.html" %}
-{% block title %}Workout Remixer{% endblock %}
-{% block page %}Workout Remixer{% endblock %}
+{% block title %}Gym Buddy{% endblock %}
+{% block page %}Gym Buddy{% endblock %}
 
 {{ super() }}
 
 {% block content %}
-    <h1>Workout Remixer</h1>
+    <h1></h1>
     {% if is_authenticated %}
         <p> Welcome, {{current_user.username}} </p>
     {% endif %}
-    <p>This is a boilerplate flask application which follows the MVC pattern for structuring the project.</p>
+    
 {% endblock %}
