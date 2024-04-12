@@ -33,6 +33,19 @@
             margin: 0;
             padding: 0; 
         }
+
+        .auth-link {
+            display: inline-block;
+        padding: 10px 20px;
+        color: black;
+        background-color: white;
+        text-decoration: none;
+        border: 1px solid black;
+    }
+    .auth-link:hover {
+        background-color: lightgray;
+    }
+
     </style>
 {% endblock %}
 
@@ -82,7 +95,11 @@
                           <label for="password">Password</label>
                         </div>
                       </div>
-                      <button style="color:black; background-color:white;" type="submit" class="btn waves-effect waves-light pulse">Login</button>
+
+                      <button type="submit" class="auth-link">Login</button>
+
+                      <li style="padding-top:5vh;"><a href="/signup" class="auth-link">Sign Up</a></li> 
+                      
                     </form>
                     </div>
                   </div>
