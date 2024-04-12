@@ -61,33 +61,33 @@
                 <div style="align-items: center; justify-content: center; display:flex;">
 
 
-
-                  <!-- "position: absolute; top:20%; transform: translateY(-50%); width:40%; " -->
-                  <img src="static/GYMRAT.png" style="position: absolute; top: 20%; transform: translateY(-50%); width:30%;">
-
+                  <div class="container"> 
+                  <!-- style="position: absolute; top: 20%; transform: translateY(-50%); width:30%;" -->
+                  <img class="responsive-img" src="static/GYMRAT.png" >
+                  
 
 
                   <!-- style="display: flex; justify-content: center; align-items: center; background-color: red; position:static;" -->
-                <div> 
-                  <form method="POST" action="/login"> 
-                    <div class="row">
-                      <div class="input-field col s12">
-                        <input placeholder="username" value="bob" name="username" type="text" class="validate" required>
-                        <label for="username">username</label>
+                  <div> 
+                    <form method="POST" action="/login" style="align-items: center; justify-content:center; background-color: black; opacity:0.8; padding: 4vh;"> 
+                      <div class="row">
+                        <div class="input-field col s12">
+                          <input placeholder="username" value="bob" name="username" type="text" class="validate" required>
+                          <label for="username">username</label>
+                        </div>
                       </div>
-                    </div>
-                    <div class="row">
-                      <div class="input-field col s12">
-                        <input placeholder="password"value="bobpass" name="password" type="password" class="validate" required>
-                        <label for="password">Password</label>
+                      <div class="row">
+                        <div class="input-field col s12">
+                          <input placeholder="password"value="bobpass" name="password" type="password" class="validate" required>
+                          <label for="password">Password</label>
+                        </div>
                       </div>
+                      <button style="color:black; background-color:white;" type="submit" class="btn waves-effect waves-light pulse">Login</button>
+                    </form>
                     </div>
-                    <button type="submit" class="btn waves-effect waves-light">Login</button>
-                  </form>
                   </div>
 
-
-                </div>
+              </div>
                 
                 
 
