@@ -1,11 +1,11 @@
-import click, pytest, sys
+import click, pytest, sys, csv
 from flask import Flask
 from flask.cli import with_appcontext, AppGroup
 
 from App.database import db, get_migrate
 from App.main import create_app
 from App.controllers import ( create_user, get_all_users_json, get_all_users )
-
+from App.models import Workout
 # This commands file allow you to create convenient CLI commands for testing controllers
 
 app = create_app()
@@ -16,6 +16,20 @@ migrate = get_migrate(app)
 def initialize():
     db.drop_all()
     db.create_all()
+    with open('App/megaGymDataset.csv', newline='', encoding='utf-8') as csvfile:
+        csv_reader = csv.DictReader(csvfile)
+        for row in csv_reader:
+            workout = Workout(
+                title=row['Title'],
+                description=row['Desc'],
+                type=row['Type'],
+                body_part=row['BodyPart'],
+                equipment=row['Equipment'],
+                level=row['Level'],
+            )
+            db.session.add(workout)
+  
+    db.session.commit()
     create_user('bob', 'bobpass')
     print('database intialized')
 
@@ -67,3 +81,15 @@ def user_tests_command(type):
     
 
 app.cli.add_command(test)
+
+
+@app.cli.command("display-workouts")
+def display_workouts():
+    """CLI command to display all workouts in the database."""
+    with app.app_context():
+        workouts = Workout.query.all()  # Fetch all workouts from the database
+        count = 0  # Initialize counter variable
+        for workout in workouts:
+            count += 1  # Increment counter for each workout
+            click.echo(f"Title: {workout.title}, Description: {workout.description}, Type: {workout.type}, Body Part: {workout.body_part}, Equipment: {workout.equipment}, Level: {workout.level}")
+        click.echo(f"Total number of workouts: {count}")  # Print total count at the end
