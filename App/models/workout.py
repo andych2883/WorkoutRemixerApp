@@ -11,6 +11,7 @@ class Workout(db.Model):
     routines = db.relationship('RoutineWorkout', backref='workout', lazy=True)
 
 def __init__(self, title, description, type, body_part, equipment, level, rating, rating_description):
+    super().__init__()
     self.title = title
     self.description = description
     self.type = type

@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>{% block title %}{% endblock %}</title>
+    <title>{% block title %}GYM RAT{% endblock %}</title>
 
   </head>
   <body>
@@ -72,14 +72,14 @@
                     <form method="POST" action="/login" style="align-items: center; justify-content:center; background-color: black; opacity:0.8; padding: 4vh;"> 
                       <div class="row">
                         <div class="input-field col s12">
-                          <input placeholder="username" value="bob" name="username" type="text" class="validate" required>
-                          <label for="username">username</label>
+                          <input placeholder="Username" value="bob" name="username" type="text" class="validate" required style="color: white;">
+                          <label for="username"></label>
                         </div>
                       </div>
                       <div class="row">
                         <div class="input-field col s12">
-                          <input placeholder="password"value="bobpass" name="password" type="password" class="validate" required>
-                          <label for="password">Password</label>
+                          <input placeholder="Password"value="bobpass" name="password" type="password" class="validate" required style="color: white;">
+                          <label for="password"></label>
                         </div>
                       </div>
                       <button style="color:black; background-color:white;" type="submit" class="btn waves-effect waves-light pulse">Login</button>
