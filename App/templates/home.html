@@ -4,18 +4,39 @@
 
 {{ super() }}
 
-
-
-
-<!-- homepage for logged in users only -->
 {% block content %}
- <div class="container">   
+<div class="container">
     {% if is_authenticated %}
+        <h5 class="center-align">Welcome back, {{current_user.username}}. Get started by selecting an option below:</h5>
 
-            <h5 class="center-align"> Welcome back, {{current_user.username}}. Get started by selecting or creating a new routine down below. </h5>
-   
+        <!-- Options Section -->
+        <div class="row">
+            <div class="col s6">
+                <div class="card blue lighten-1">
+                    <div class="card-content white-text">
+                        <span class="card-title">Browse Workouts</span>
+                        <p>Explore our collection of workouts.</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="#">Browse</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col s6">
+                <div class="card teal lighten-1">
+                    <div class="card-content white-text">
+                        <span class="card-title">Create Routine</span>
+                        <p>Create your own custom workout routine.</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="#">Create</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     {% else %}
-            <h5>Please login to view this page.</h5>
+        <h5>Please login to view this page.</h5>
     {% endif %}
-</div>     
+</div>
 {% endblock %}
