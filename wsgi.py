@@ -34,9 +34,9 @@ def initialize():
             )
             db.session.add(workout)
   
-    db.session.commit()
+            db.session.commit()
     create_user('bob', 'bobpass')
-    print('database intialized')
+    print('database intialized')        
 
 '''
 User Commands
