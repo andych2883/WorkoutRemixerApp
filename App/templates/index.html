@@ -16,105 +16,53 @@
 
 {% block styles %}
     <style>
-
-         body {
-            background-color: black;
-            margin: 0; 
-        }
-
-            .background-container {
-            
-            background-image: url('static/page-back.jpg');
-            background-size: cover;
-            background-position: center;
-            height: 97vh; 
-            width: 100vw;
-            background-attachment: fixed; 
+      /* body, html {
             margin: 0;
-            padding: 0; 
+            padding: 0;
+            height: 100%;
+            width:100;
+            overflow: hidden;
+            background-color: blue;
+        } */
+       
+        .container {
+            height: 100%;
+            /* scroll-behavior: smooth;*/
+            overflow:scroll;
+            background-color: black;
         }
-
-        .auth-link {
-            display: inline-block;
-        padding: 10px 20px;
-        color: black;
-        background-color: white;
-        text-decoration: none;
-        border: 1px solid black;
-    }
-    .auth-link:hover {
-        background-color: lightgray;
-    }
+        .box {
+          background-color: black;
+            width: calc(100vw - 40px); /* Adjusted width to account for padding */
+            height: calc(100vh - 40px); /* Adjusted height to account for padding */
+            padding: 1px;
+            
+        }
 
     </style>
 {% endblock %}
 
 
+
+
 {% block content %}
 
-    <div class="background-container">
+
+  <div class="box" style="justify-content: center;">
+    <img class="responsive-img" style="height:85vh; " src="static/letushelp.png" >
+  </div>
+ 
+
+  <div class="box">
+    <img class="responsive-img" style="padding:25vw 25vh;" src="static/logo4.png" >
+  </div>
 
 
-        <div class="row">
+  <div class="box">
+    <img class="responsive-img" src="static/page-back.jpg" >
+    
+  </div>
 
-           <!-- header slogan -->
-            <div class="col s12 grey-text" style="text-align: center; background-color: black;">Fitness, on your schedule.</div>
-
-           <!-- Let us help you achieve... text-->
-            <div class="col s6 white-text" style="background-color: black; height: 97vh; opacity:0.7;" >
-
-              <img src="static/letushelp.png" style="position: absolute; top: 50%; transform: translateY(-50%); width:45%;">
-              
-            
-            </div>
-
-            <!-- GYMRAT word logo -->
-            <div class="col s6" style="height:97vh;">
-
-                <div style="align-items: center; justify-content: center; display:flex;">
-
-
-                  <div class="container"> 
-                  <!-- style="position: absolute; top: 20%; transform: translateY(-50%); width:30%;" -->
-                  <img class="responsive-img" src="static/GYMRAT.png" >
-                  
-
-
-                  <!-- style="display: flex; justify-content: center; align-items: center; background-color: red; position:static;" -->
-                  <div> 
-                    <form method="POST" action="/login" style="align-items: center; justify-content:center; background-color: black; opacity:0.8; padding: 4vh;"> 
-                      <div class="row">
-                        <div class="input-field col s12">
-                          <input placeholder="username" value="bob" name="username" type="text" class="validate" required>
-                          <label for="username">username</label>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="input-field col s12">
-                          <input placeholder="password"value="bobpass" name="password" type="password" class="validate" required>
-                          <label for="password">Password</label>
-                        </div>
-                      </div>
-
-                      <button type="submit" class="auth-link">Login</button>
-
-                      <li style="padding-top:5vh;"><a href="/signup" class="auth-link">Sign Up</a></li> 
-                      
-                    </form>
-                    </div>
-                  </div>
-
-              </div>
-                
-                
-
-            </div>
-
-          
-  
-          
-
-
-    </div>
+ 
 
 {% endblock %}
