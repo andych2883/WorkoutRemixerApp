@@ -27,6 +27,14 @@ def initialize():
                 equipment=row['Equipment'],
                 level=row['Level'],
             )
+            workout = Workout(
+                title=row['Title'],
+                description=row['Desc'],
+                type=row['Type'],
+                body_part=row['BodyPart'],
+                equipment=row['Equipment'],
+                level=row['Level'],
+            )
             db.session.add(workout)
   
     db.session.commit()
