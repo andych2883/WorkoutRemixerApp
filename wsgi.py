@@ -17,16 +17,13 @@ def initialize():
     db.drop_all()
     db.create_all()
     with open('App/megaGymDataset.csv', newline='', encoding='utf-8') as csvfile:
-        csv_reader = csv.DictReader(csvfile)
-        for row in csv_reader:
-            workout = Workout(
-                title=row['Title'],
-                description=row['Desc'],
-                type=row['Type'],
-                body_part=row['BodyPart'],
-                equipment=row['Equipment'],
-                level=row['Level'],
-            )
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            # Handle empty values
+            for key in row.keys():
+                if row[key] == '':
+                    row[key] = None
+
             workout = Workout(
                 title=row['Title'],
                 description=row['Desc'],
