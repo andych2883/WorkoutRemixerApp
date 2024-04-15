@@ -24,6 +24,33 @@
     .nav-wrapper{
       background-color: black;
     }
+
+
+    .collection .collection-item.active{
+        background-color: red;
+    }
+
+    .collection-list{
+        list-style-type: none;
+        padding:0;
+        overflow-y: scroll;
+    }
+
+    .card{
+        box-shadow:none;
+        border:0;
+    }
+
+
+
+.input-field [type="text"] {
+  width: 30vw; 
+  border-radius: 20px;
+  background-color: white;
+  color:pink;
+}
+
+
   </style>
 
 
@@ -36,13 +63,20 @@
               <ul id="nav-mobile" class="left">
 
 
-
                 {% if is_authenticated %}
-                <!-- must be logged in to see this page -->
+                
+
                 <li><a href="/home">Home</a></li>
                   <li><a href="/users">Users Jinja</a></li>
                   <li><a href="/identify">Routines</a></li> <!-- was Identify -->
                   <li><a href="/static/users">Users JS</a></li>
+                  <li>
+                      <div class="input-field">
+                          <input id="search" type="search" placeholder="Search Workouts" style="height: 3vh; background-color: white; color: black; margin-top:2vh; border-radius:20px;">
+                          <!-- <label class="label-icon" for="search" style="color:#5B42F3;"><i class="material-icons">search</i></label>
+                          <i class="material-icons" style="color:#00DDEB ">close</i> -->
+                      </div>
+                </li>
                   {% endif %}
                   
               </ul>

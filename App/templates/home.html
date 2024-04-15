@@ -2,41 +2,43 @@
 {% block title %}gymrat{% endblock %}
 {% block page %}<img src="static/logo4.png" alt="gymrat" style="width: 8vw; height: 7vh;">{% endblock %}
 
-
 {% block content %}
-    <div class="container">
-        {% if is_authenticated %}
-            <div class="row">
-                <!-- Section heading -->
-                <div class="col s12">
-                    <h4>Workouts</h4>
-                </div>
+{% if is_authenticated %}
+<div class="row">
+    <div class="col m3 list-container collection" style="max-height: 95vh;">
+        <div class="collection" >
+            <div class="collection-list"> 
+                {% for workout in workouts %}
+                        <a name="workout-detail"></a>
+                        <li><a href="/workouts/{{ workout.title }}" id ="workout-{{ workout.title }}"  class="collection-item {% if workout.title==selected_workout %}
+                            active white-text{% else %}black-text{% endif %}">{{ workout.title }}</a></li> 
+                {% endfor %}
             </div>
-
-            <div class="row">
-                <!-- Search bar -->
-                <div class="input-field col s12 m6">
-                    <input id="search" type="text" placeholder="Search Workouts">
-                    <label for="search"></label>
-                </div>
-            </div>
-
-            <div class="row">
-                <!-- List of workouts -->
-                <div class="col s12">
-                    <ul class="collection">
-                        {% for workout in workouts %}
-                            <li class="collection-item">{{ workout.title }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-        {% else %}
-            <div class="row">
-                <div class="col s12">
-                    <h5>Please login to view this page.</h5>
-                </div>
-            </div>
-        {% endif %}
+        </div>
     </div>
+
+
+
+
+
+
+    <div class="col m6" style="height: 95vh; background-color: blueviolet;">
+    <p>this is where workout details will go</p>
+    </div>
+
+    <div class="col m3" style="height: 95vh; background-color: rgb(218, 30, 46);" >
+        <div class="row">
+            <!-- Search bar -->
+            <div class="input-field col s12 m6">
+                <input id="search" type="text" placeholder="Search Workouts">
+                <label for="search"></label>
+            </div>
+        </div>
+    <p>this is where routines will go</p>
+    </div>
+
+
+</div>
+
+{% endif %}
 {% endblock %}
