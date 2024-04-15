@@ -7,6 +7,9 @@ from App.controllers import (
     login, signup
 )
 
+from App.models import (
+    Workout
+)
 auth_views = Blueprint('auth_views', __name__, template_folder='../templates')
 
 
@@ -62,7 +65,8 @@ def login_action():
 @auth_views.route('/home', methods=['GET'])
 @jwt_required()
 def home_page():
-    return render_template('home.html')
+    workouts = Workout.query.all()
+    return render_template('home.html', workouts=workouts)
 
 @auth_views.route('/logout', methods=['GET'])
 def logout_action():
