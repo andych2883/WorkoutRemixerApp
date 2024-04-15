@@ -18,9 +18,19 @@
     <title>{% block title %}{% endblock %}</title>
 
   </head>
+
+  <style>
+
+    .nav-wrapper{
+      background-color: black;
+    }
+  </style>
+
+
+
   <body>
     
-      <nav class="indigo darken-3">
+    <nav>
           <div class="nav-wrapper">
               <a href="#!" class="brand-logo center">{% block page %}{% endblock %}</a>
               <ul id="nav-mobile" class="left">

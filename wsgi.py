@@ -17,10 +17,6 @@ def initialize():
     db.drop_all()
     db.create_all()
     with open('App/megaGymDataset.csv', newline='', encoding='utf-8') as csvfile:
-<<<<<<< HEAD
-        csv_reader = csv.DictReader(csvfile)
-        for row in csv_reader:
-=======
         reader = csv.DictReader(csvfile)
         for row in reader:
             # Handle empty values
@@ -28,7 +24,6 @@ def initialize():
                 if row[key] == '':
                     row[key] = None
 
->>>>>>> origin/Andy-Test
             workout = Workout(
                 title=row['Title'],
                 description=row['Desc'],
@@ -39,11 +34,7 @@ def initialize():
             )
             db.session.add(workout)
   
-<<<<<<< HEAD
-    db.session.commit()
-=======
             db.session.commit()
->>>>>>> origin/Andy-Test
     create_user('bob', 'bobpass')
     print('database intialized')        
 
