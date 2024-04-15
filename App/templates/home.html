@@ -37,7 +37,8 @@
         <div class="collection">
             {% if workouts %}
                 {% for workout in workouts %}
-                    <a href="/home?workout_id={{ workout.id }}" class="collection-item">{{ workout.title }}</a>
+                    <a href="/home?workout_id={{ workout.id }}" class="collection-item {% if workout.id==selected_workout %}
+                    active white-text{% else %}black-text{% endif %}">{{ workout.title }}</a>
                 {% endfor %}
             {% endif %}
         </div>
