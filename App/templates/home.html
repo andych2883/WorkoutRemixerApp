@@ -9,14 +9,19 @@
     padding: 0;
 }
 </style>
+
 {% endblock %}
 
 {% block content %}
-<div class="row">
+
+
+<div class="row" style="overflow-y: hidden;">
     {% if is_authenticated %}
     <!-- Left section: Search bar and list of workouts -->
-    <div class="col s12 m4">
-        <!-- Search form -->
+    <div class="col m3 list-container collection" style="max-height: 90vh;  overflow-y: scroll;">
+
+
+        <!-- Search form 
         <form action="/home" method="GET">
             <div class="input-field">
                 <input id="search" name="search" type="text" placeholder="Search Workouts by Title" value="{{ request.args.get('search') }}">
@@ -26,6 +31,8 @@
                 <button class="btn waves-effect waves-light" type="submit">Search</button>
             </div>
         </form>
+        -->
+
         <h4>Workouts</h4>
         <div class="collection">
             {% if workouts %}
@@ -36,7 +43,7 @@
         </div>
     </div>
     <!-- Middle section: Selected workout details -->
-    <div class="col s12 m4">
+    <div class="col s12 m6" style="height: 92vh; background-color: blueviolet;">
         <h4>Selected Workout</h4>
         {% if selected_workout %}
             <p>Title: {{ selected_workout.title }}</p>
@@ -49,7 +56,7 @@
         {% endif %}
     </div>
     <!-- Right section: User routines -->
-    <div class="col s12 m4">
+    <div class="col s12 m3" style="height: 92vh; background-color: rgb(218, 30, 46);  overflow-y: scroll;" >
         <h4>User Routines</h4>
         <!-- Add user routines content here -->
     </div>
@@ -61,4 +68,6 @@
     </div>
     {% endif %}
 </div>
+
+
 {% endblock %}
