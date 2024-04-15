@@ -17,8 +17,4 @@ def __init__(self, title, description, type, body_part, equipment, level, rating
     self.type = type
     self.body_part = body_part
     self.equipment = equipment
-<<<<<<< HEAD
     self.level = level
-=======
-    self.level = level
->>>>>>> origin/Andy-Test
