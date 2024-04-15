@@ -2,40 +2,63 @@
 {% block title %}Home{% endblock %}
 {% block page %}Home{% endblock %}
 
+{% block styles %}
+<style>
+.left-align {
+    margin: 0;
+    padding: 0;
+}
+</style>
+{% endblock %}
+
 {% block content %}
-    <div class="container">
-        {% if is_authenticated %}
-            <div class="row">
-                <!-- Section heading -->
-                <div class="col s12">
-                    <h4>Workouts</h4>
-                </div>
+<div class="row">
+    {% if is_authenticated %}
+    <!-- Left section: Search bar and list of workouts -->
+    <div class="col s12 m4">
+        <!-- Search form -->
+        <form action="/home" method="GET">
+            <div class="input-field">
+                <input id="search" name="search" type="text" placeholder="Search Workouts by Title" value="{{ request.args.get('search') }}">
+                <label for="search"></label>
             </div>
-
-            <div class="row">
-                <!-- Search bar -->
-                <div class="input-field col s12 m6">
-                    <input id="search" type="text" placeholder="Search Workouts">
-                    <label for="search"></label>
-                </div>
+            <div class="input-field">
+                <button class="btn waves-effect waves-light" type="submit">Search</button>
             </div>
-
-            <div class="row">
-                <!-- List of workouts -->
-                <div class="col s12">
-                    <ul class="collection">
-                        {% for workout in workouts %}
-                            <li class="collection-item">{{ workout.title }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-        {% else %}
-            <div class="row">
-                <div class="col s12">
-                    <h5>Please login to view this page.</h5>
-                </div>
-            </div>
+        </form>
+        <h4>Workouts</h4>
+        <div class="collection">
+            {% if workouts %}
+                {% for workout in workouts %}
+                    <a href="/home?workout_id={{ workout.id }}" class="collection-item">{{ workout.title }}</a>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <!-- Middle section: Selected workout details -->
+    <div class="col s12 m4">
+        <h4>Selected Workout</h4>
+        {% if selected_workout %}
+            <p>Title: {{ selected_workout.title }}</p>
+            <p>Description: {{ selected_workout.description }}</p>
+            <p>Type: {{ selected_workout.type }}</p>
+            <p>Body Part: {{ selected_workout.body_part }}</p>
+            <p>Equipment: {{ selected_workout.equipment }}</p>
+            <p>Level: {{ selected_workout.level }}</p>
+            <!-- Add other workout details here -->
         {% endif %}
     </div>
+    <!-- Right section: User routines -->
+    <div class="col s12 m4">
+        <h4>User Routines</h4>
+        <!-- Add user routines content here -->
+    </div>
+    {% else %}
+    <div class="row">
+        <div class="col s12">
+            <h5>Please login to view this page.</h5>
+        </div>
+    </div>
+    {% endif %}
+</div>
 {% endblock %}

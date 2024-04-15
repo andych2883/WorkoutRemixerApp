@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, jsonify, request, flash, send_from_directory, flash, redirect, url_for
 from flask_jwt_extended import jwt_required, current_user, unset_jwt_cookies, set_access_cookies
-
+from sqlalchemy import or_
 from.index import index_views
 
 from App.controllers import (
@@ -43,8 +43,28 @@ def login_action():
 @auth_views.route('/home', methods=['GET'])
 @jwt_required()
 def home_page():
-    workouts = Workout.query.all()
-    return render_template('home.html', workouts=workouts)
+    search_query = request.args.get('search', default='', type=str)
+    workouts = None
+    selected_workout = None  # Define selected_workout initially as None
+    
+    if search_query:
+        # Filter workouts by title
+        workouts = Workout.query.filter(Workout.title.ilike(f'%{search_query}%')).all()
+        if not workouts:
+            flash('No workouts found for the search query.', 'warning')
+    else:
+        workout_id = request.args.get('workout_id', type=int)
+        if workout_id:
+            selected_workout = Workout.query.get_or_404(workout_id)
+        workouts = Workout.query.all()
+    
+    return render_template('home.html', workouts=workouts, selected_workout=selected_workout)
+
+
+
+
+
+
 
 @auth_views.route('/logout', methods=['GET'])
 def logout_action():
