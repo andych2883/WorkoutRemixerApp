@@ -34,17 +34,115 @@
             padding: 0; 
         }
 
-        .auth-link {
-            display: inline-block;
-        padding: 10px 20px;
-        color: black;
-        background-color: white;
-        text-decoration: none;
-        border: 1px solid black;
-    }
-    .auth-link:hover {
-        background-color: lightgray;
-    }
+        .login-link {
+  align-items: center;
+  background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
+  border: 0;
+  border-radius: 8px;
+  box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  display: flex;
+  font-family: Phantomsans, sans-serif;
+  justify-content: center;
+  line-height: 1em;
+  max-width: 100%;
+  min-width: 5vw;
+  padding: 10px;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.login-link:active,
+.login-link:hover {
+  outline: 0;
+}
+
+.login-link span {
+  background-color: rgb(5, 6, 45);
+  padding: 16px 24px;
+  border-radius: 6px;
+  width: 100%;
+  height: 100%;
+  transition: 300ms;
+}
+
+.login-link:hover span {
+  background: none;
+}
+
+@media (min-width: 768px) {
+  .login-link {
+    font-size: 20px;
+    padding:10px;
+  }
+}
+
+.auth-link {
+  font-family: Phantomsans, sans-serif;
+  padding: 0.6em 2em;
+  border: none;
+  outline: none;
+  color: rgb(255, 255, 255);
+  background: #111;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 10px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.auth-link:before {
+  content: "";
+  background: linear-gradient(
+    45deg,
+    #AF40FF,
+     #5B42F3 50%,
+     #00DDEB
+  );
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  -webkit-filter: blur(5px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  animation: glowing-button-85 20s linear infinite;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 10px;
+}
+
+@keyframes glowing-button-85 {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.auth-link:after {
+  z-index: -1;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #222;
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+}
 
     </style>
 {% endblock %}
@@ -61,10 +159,11 @@
             <div class="col s12 grey-text" style="text-align: center; background-color: black;">Fitness, on your schedule.</div>
 
            <!-- Let us help you achieve... text-->
-            <div class="col s6 white-text" style="background-color: black; height: 97vh; opacity:0.7;" >
+            <div class="col s6 white-text" style="background-color: rgba(0, 0, 0, 0.8); height: 97vh;" >
 
               <img src="static/letushelp.png" style="position: absolute; top: 50%; transform: translateY(-50%); width:45%;">
               
+            
             
             </div>
 
@@ -74,31 +173,31 @@
                 <div style="align-items: center; justify-content: center; display:flex;">
 
 
-                  <div class="container"> 
-                  <!-- style="position: absolute; top: 20%; transform: translateY(-50%); width:30%;" -->
-                  <img class="responsive-img" src="static/GYMRAT.png" >
-                  
-
-
-                  <!-- style="display: flex; justify-content: center; align-items: center; background-color: red; position:static;" -->
-                  <div> 
-                    <form method="POST" action="/login" style="align-items: center; justify-content:center; background-color: black; opacity:0.8; padding: 4vh;"> 
-                      <div class="row">
-                        <div class="input-field col s12">
-                          <input placeholder="username" value="bob" name="username" type="text" class="validate" required>
-                          <label for="username">username</label>
+                  <!-- <div class="container"> -->
+                    <div style="display: block; justify-content: center; align-items: center; height: 50vh; background-color: rgba(0, 0, 0, 0.9); margin-top: 15vh;"> 
+                      <img class="responsive-img" src="static/logo4.png" >
+                      <form method="POST" action="/login" style="align-items: center; justify-content:center; background-color: black; padding: 4vh;"> 
+                        <div class="row">
+                          <div class="input-field col s12">
+                            <input placeholder="username" value="bob" name="username" type="text" class="validate" required>
+                            <label for="username">username</label>
+                          </div>
                         </div>
-                      </div>
-                      <div class="row">
-                        <div class="input-field col s12">
-                          <input placeholder="password"value="bobpass" name="password" type="password" class="validate" required>
-                          <label for="password">Password</label>
+                        <div class="row">
+                          <div class="input-field col s12">
+                            <input placeholder="password"value="bobpass" name="password" type="password" class="validate" required>
+                            <label for="password">Password</label>
+                          </div>
                         </div>
+
+                      <div style="display:flex;"> 
+
+                          <button type="submit" class="login-link" style="margin-left:0.5vw;">Login</button>
+
+                          <button style="margin-left: 2vw;" class="auth-link"><a href="/signup" style="color: white; text-decoration: none;">Sign Up</a></button>
+
+
                       </div>
-
-                      <button type="submit" class="auth-link">Login</button>
-
-                      <li style="padding-top:5vh;"><a href="/signup" class="auth-link">Sign Up</a></li> 
                       
                     </form>
                     </div>
