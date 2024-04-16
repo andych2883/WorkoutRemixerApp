@@ -41,9 +41,15 @@
                 <form action="/home" method="POST">
                     <input type="hidden" name="workout_id" value="{{ selected_workout.id }}">
                     <label for="reps">Reps:</label>
-                    <input type="number" id="reps" name="reps" value="0">
+                    <input type="number" id="reps" name="reps" value="0" min="0">
                     <label for="sets">Sets:</label>
-                    <input type="number" id="sets" name="sets" value="0">
+                    <input type="number" id="sets" name="sets" value="0" min="0">
+                    <select name="routine_id" required>
+                        <option value="" disabled selected>Select Routine</option>
+                        {% for routine in user_routines %}
+                            <option value="{{ routine.id }}">{{ routine.title }}</option>
+                        {% endfor %}
+                    </select>
                     <button class="btn waves-effect waves-light" type="submit">Add to Routine</button>
                 </form>
             {% endif %}
@@ -64,31 +70,34 @@
                     {% for routine in user_routines %}
                         <li class="collection-item">
                             <div>{{ routine.title }}
-                                <a href="#!" class="secondary-content"><i class="material-icons">expand_more</i></a>
+                                <a href="#!" class="secondary-content" onclick="toggleCollapse(this)"><i class="material-icons">expand_more</i></a>
                             </div>
                             <ul class="collapsible" data-collapsible="accordion">
-                                {% for workout in routine.workouts %}
+                                {% for routine_workout in routine.routine_workouts %}
                                     <li>
-                                        <div class="collapsible-header">{{ workout.title }}</div>
+                                        <div class="collapsible-header">{{ routine_workout.workout.title }}</div>
                                         <div class="collapsible-body">
                                             <form action="/home" method="POST">
-                                                <input type="hidden" name="routine_id" value="{{ routine.id }}">
-                                                <input type="hidden" name="workout_id" value="{{ workout.id }}">
+                                                <input type="hidden" name="routine_workout_id" value="{{ routine_workout.id }}">
                                                 <label for="reps">Reps:</label>
-                                                <input type="number" id="reps" name="reps" value="{{ workout.reps }}">
+                                                <input type="number" id="reps" name="reps" value="{{ routine_workout.reps }}" min="0">
                                                 <label for="sets">Sets:</label>
-                                                <input type="number" id="sets" name="sets" value="{{ workout.sets }}">
-                                                <button type="submit">Update</button>
+                                                <input type="number" id="sets" name="sets" value="{{ routine_workout.sets }}" min="0">
+                                                <button class="btn waves-effect waves-light" type="submit">Update</button>
                                             </form>
+                                            <br>
                                             <form action="/home" method="POST">
-                                                <input type="hidden" name="routine_id" value="{{ routine.id }}">
-                                                <input type="hidden" name="workout_id" value="{{ workout.id }}">
-                                                <button type="submit">Delete</button>
+                                                <input type="hidden" name="routine_workout_id" value="{{ routine_workout.id }}" />
+                                                <button type="submit" class="btn red" name="delete_workout_from_routine" value="true">Delete</button>
                                             </form>
                                         </div>
                                     </li>
                                 {% endfor %}
                             </ul>
+                            <form action="/home" method="POST" style="display:inline;">
+                                <input type="hidden" name="routine_id" value="{{ routine.id }}">
+                                <button type="submit" class="btn red" name="delete_routine" value="true">Delete Routine</button>
+                            </form>
                         </li>
                     {% endfor %}
                 </ul>
@@ -105,4 +114,14 @@
     </div>
     {% endif %}
 </div>
+<script>
+function toggleCollapse(element) {
+    var collapsible = element.closest('li').querySelector('.collapsible');
+    if (collapsible.style.display === "none") {
+        collapsible.style.display = "block";
+    } else {
+        collapsible.style.display = "none";
+    }
+}
+</script>
 {% endblock %}
