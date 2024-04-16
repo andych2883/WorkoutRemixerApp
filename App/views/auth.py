@@ -74,6 +74,7 @@ def home_page():
     workouts = None
     selected_workout = None
     user_routines = None
+    selected_routine = None
     
     if request.method == 'POST':
         if 'workout_id' in request.form:
@@ -104,6 +105,10 @@ def home_page():
         elif 'routine_title' in request.form:
             # Handle creating routine
             routine_title = request.form.get('routine_title')
+            # Ensures a user enters 1 or more character(s) for routine title
+            if not routine_title:
+                flash('Routine title is required.', 'danger')
+                return redirect(request.referrer or url_for('auth_views.home_page'))
             existing_routine = Routine.query.filter_by(title=routine_title, user_id=current_user.id).first()
             if existing_routine:
                 flash('Routine with the same title already exists.', 'danger')
@@ -126,7 +131,13 @@ def home_page():
 
     user_routines = Routine.query.filter_by(user_id=current_user.id).all()
 
-    return render_template('home.html', workouts=workouts, selected_workout=selected_workout, user_routines=user_routines)
+    
+    routine_id = request.args.get('routine_id', type=int)
+    
+    if routine_id:
+        selected_routine = Routine.query.get_or_404(routine_id)
+   
+    return render_template('home.html', workouts=workouts, selected_workout=selected_workout, user_routines=user_routines, selected_routine=selected_routine)
 
 
 @auth_views.route('/logout', methods=['GET'])
