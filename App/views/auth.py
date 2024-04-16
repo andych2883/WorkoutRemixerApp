@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, jsonify, request, flash, send_from_directory, flash, redirect, url_for
 from flask_jwt_extended import jwt_required, current_user, unset_jwt_cookies, set_access_cookies, get_jwt_identity
 from sqlalchemy import or_
+from App.models import db
 from.index import index_views
 
 from App.controllers import (

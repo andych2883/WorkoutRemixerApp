@@ -19,10 +19,10 @@
     {% if is_authenticated %}
     <div class="row">
         <!-- Left section: Search bar and list of workouts -->
-        <div class="col m3 list-container collection" style="max-height: 90vh;  overflow-y: scroll;">
+        <div class="col s12 m3 list-container collection" style="max-height: 90vh;  overflow-y: scroll;">
 
 
-            <!-- Search form 
+            <!-- Search form : MOVED TO NAVBAR
             <form action="/home" method="GET">
                 <div class="input-field">
                     <input id="search" name="search" type="text" placeholder="Search Workouts by Title" value="{{ request.args.get('search') }}">
