@@ -69,15 +69,33 @@ def home_page():
             flash('Workout removed from routine successfully.', 'success')
             return redirect(request.referrer or url_for('auth_views.home_page'))
 
+        if 'routine_workout_id' in request.form and request.form.get('action') == 'update':
+            routine_workout_id = request.form.get('routine_workout_id', type=int)
+            reps = request.form.get('reps', type=int)
+            sets = request.form.get('sets', type=int)
+            # Validate input
+            if reps is not None and sets is not None and routine_workout_id is not None:
+                routine_workout = RoutineWorkout.query.get(routine_workout_id)
+                if routine_workout:
+                    routine_workout.reps = reps
+                    routine_workout.sets = sets
+                    db.session.commit()
+                    flash('Workout updated successfully.', 'success')
+                else:
+                    flash('Could not find the specified workout in the routine.', 'error')
+            else:
+                flash('Invalid input for updating workout.', 'error')
+            return redirect(request.referrer or url_for('auth_views.home_page'))
+
         routine_id = request.form.get('routine_id')
         if 'workout_id' in request.form:
             workout_id = request.form.get('workout_id')
             reps = request.form.get('reps', type=int)
             sets = request.form.get('sets', type=int)
 
-            if not reps or reps <= 0 or not sets or sets <= 0 or not routine_id:
-              flash('Please ensure all fields are filled out correctly. Reps and Sets must be above 0, and a Routine must be selected.', 'error')
-              return redirect(url_for('home_page', workout_id=workout_id))
+            if not reps or not sets or not routine_id:
+                flash('Please ensure all fields are filled out correctly. Reps and Sets must be above 0, and a Routine must be selected.', 'error')
+                return redirect(request.referrer or url_for('auth_views.home_page', workout_id=workout_id))
             else:
                 if RoutineWorkout.query.filter_by(routine_id=routine_id, workout_id=workout_id).first():
                     flash('Workout already exists in this routine.', 'warning')
@@ -115,6 +133,7 @@ def home_page():
         workouts = Workout.query.all()
 
     return render_template('home.html', workouts=workouts, selected_workout=selected_workout, user_routines=user_routines, is_authenticated=True)
+
 
 
 @auth_views.route('/logout', methods=['GET'])

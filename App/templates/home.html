@@ -83,6 +83,7 @@
                                                 <input type="number" id="reps" name="reps" value="{{ routine_workout.reps }}" min="0">
                                                 <label for="sets">Sets:</label>
                                                 <input type="number" id="sets" name="sets" value="{{ routine_workout.sets }}" min="0">
+                                                <input type="hidden" name="action" value="update"> <!-- Add this hidden input -->
                                                 <button class="btn waves-effect waves-light" type="submit">Update</button>
                                             </form>
                                             <br>
