@@ -78,35 +78,34 @@
             <h5>Selected Routine:</h5>
             {% if selected_routine %}
                 <h4>{{selected_routine.title}}</h4> 
+                <ul class="collapsible" data-collapsible="accordion">
                     {% for routine_workout in selected_routine.routine_workouts %}
-                             
-                            <li>
-                                <div class="collapsible-header">{{ routine_workout.workout.title }}</div>
-                                <div class="collapsible-body">
-                                    <form action="/home" method="POST">
-                                        <input type="hidden" name="routine_workout_id" value="{{ routine_workout.id }}">
-                                        <label for="reps">Reps:</label>
-                                        <input type="number" id="reps" name="reps" value="{{ routine_workout.reps }}" min="0">
-                                        <label for="sets">Sets:</label>
-                                        <input type="number" id="sets" name="sets" value="{{ routine_workout.sets }}" min="0">
-                                        <input type="hidden" name="action" value="update"> 
-                                        <button class="btn waves-effect waves-light" type="submit">Update</button>
-                                    </form>
-                                    <br>
-                                </div>
-                            </li>
-                        
-                    </ul>
-                    <!-- This removed a workout from the routine -->
-                    <form action="/home" method="POST">
-                        <input type="hidden" name="routine_workout_id" value="{{ routine_workout.id }}" />
-                        <button type="submit" class="btn red" name="delete_workout_from_routine" value="true">Delete This Workout</button>
-                    </form>
+                    <li>
+                        <div class="collapsible-header">{{ routine_workout.workout.title }}</div>
+                        <div class="collapsible-body">
+                            <form action="/home" method="POST">
+                                <input type="hidden" name="routine_workout_id" value="{{ routine_workout.id }}">
+                                <label for="reps">Reps:</label>
+                                <input type="number" id="reps" name="reps" value="{{ routine_workout.reps }}"
+                                    min="0">
+                                <label for="sets">Sets:</label>
+                                <input type="number" id="sets" name="sets" value="{{ routine_workout.sets }}"
+                                    min="0">
+                                <input type="hidden" name="action" value="update"> <!-- Add this hidden input -->
+                                <button class="btn waves-effect waves-light" type="submit">Update</button>
+                            </form>
+                            <br>
+                            <form action="/home" method="POST">
+                                <input type="hidden" name="routine_workout_id" value="{{ routine_workout.id }}" />
+                                <button type="submit" class="btn red" name="delete_workout_from_routine"
+                                    value="true">Delete</button>
+                            </form>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
 
-                    
-                </li>
-                {% endfor %} 
-
+                   
                 <form action="/home" method="POST" style="display:inline;">
                     <input type="hidden" name="routine_id" value="{{ selected_routine.id }}">
                     <button type="submit" class="btn red" name="delete_routine" value="true">Delete Entire Routine</button>
