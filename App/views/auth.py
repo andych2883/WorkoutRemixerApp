@@ -38,34 +38,6 @@ def identify_page():
 
 @auth_views.route('/signup', methods=['POST'])
 def signup_action():
-    data = request.form
-    username = data.get('username')
-    password = data.get('password')
-    if not username or not password:
-        flash('Username and password are required')
-        return redirect(url_for('auth_views.signup_page'))
-    if signup(username, password):
-        flash('Signup successful! Please login.')
-        return redirect(url_for('auth_views.index_page'))
-    else:
-        flash('Username already exists. Please choose a different username.')
-        return redirect(url_for('auth_views.signup_page'))    
-
-@auth_views.route('/login', methods=['POST'])
-def login_action():
-    data = request.form
-    token = login(data['username'], data['password'])
-    response = redirect(url_for('auth_views.home_page'))
-    #response = redirect(request.referrer)
-    if not token:
-        flash('Bad username or password given'), 401
-    else:
-        flash('Login Successful')
-        set_access_cookies(response, token) 
-    return response
-
-@auth_views.route('/signup', methods=['POST'])
-def signup_action():
     username = request.form.get('new_username')  
     password = request.form.get('new_password') 
 
@@ -91,6 +63,22 @@ def signup_action():
     flash('Signup successful. Welcome!', 'success')
     set_access_cookies(response, token)
     return response
+
+
+
+@auth_views.route('/login', methods=['POST'])
+def login_action():
+    data = request.form
+    token = login(data['username'], data['password'])
+    response = redirect(url_for('auth_views.home_page'))
+    #response = redirect(request.referrer)
+    if not token:
+        flash('Bad username or password given'), 401
+    else:
+        flash('Login Successful')
+        set_access_cookies(response, token) 
+    return response
+
 
 @auth_views.route('/home', methods=['GET', 'POST'])
 @jwt_required()
@@ -193,7 +181,7 @@ def home_page():
 
 @auth_views.route('/logout', methods=['GET'])
 def logout_action():
-    response = redirect(request.referrer) 
+    response = redirect(request.referrer or url_for('auth_views.home_page'))
     flash("Logged Out!")
     unset_jwt_cookies(response)
     return response
