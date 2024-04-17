@@ -26,10 +26,6 @@ Page/Action Routes
 def index_page():
     return render_template('index.html')
 
-@auth_views.route('/signup', methods=['GET'])
-def signup_page():
-    return render_template('signup.html')
-
 @auth_views.route('/users', methods=['GET'])
 def get_user_page():
     users = get_all_users()
