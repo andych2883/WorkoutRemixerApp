@@ -22,13 +22,14 @@
   <style>
 
     .nav-wrapper{
-      background-color: black;
+      background-color: #191C24;
     }
 
 
     .collection .collection-item.active{
-        background-color: red;
+        background-color: #ff7b00;
     }
+
 
     .collection-list{
         list-style-type: none;
@@ -59,12 +60,12 @@
 
                 {% if is_authenticated %}
                 
-
-                <li><a href="/home">Home</a></li>
+                <!--<li><a href="/home">Home</a></li>
                   <li><a href="/users">Users Jinja</a></li>
-                  <li><a href="/identify">Routines</a></li> <!-- was Identify -->
+                  <li><a href="/identify">Routines</a></li> 
                   <li><a href="/static/users">Users JS</a></li>
-                  <li>
+                  <li> -->
+                
                     <form action="/home" method="GET"> 
                       <div class="input-field">
                           <input id="search" type="search" name="search" placeholder="Search Workouts" value="{{ request.args.get('search' )}}"style="height: 3vh; background-color: white; color: black; margin-top:2vh; border-radius:20px;">
@@ -102,7 +103,7 @@
           }
       </style>
 
-    <div id="content">{% block content %}{% endblock %}</div> <!-- removed: class="container", removed 70% restriction onscreen-->
+    <div id="content" style="background-color: #191C24;">{% block content %}{% endblock %}</div> <!-- removed: class="container", removed 70% restriction onscreen-->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>

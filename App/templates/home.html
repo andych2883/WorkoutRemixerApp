@@ -38,13 +38,14 @@
             <div class="collection">
                 {% if workouts %}
                     {% for workout in workouts %}
-                    <a href="/home?workout_id={{ workout.id }}{% if selected_routine %}&routine_id={{ selected_routine.id }}{% endif %}" class="collection-item {% if selected_workout and selected_workout.id == workout.id %}active{% endif %}">{{ workout.title }}</a>
+                    <a href="/home?workout_id={{ workout.id }}{% if selected_routine %}&routine_id={{ selected_routine.id }}{% endif %}" class="collection-item {% if selected_workout and selected_workout.id == workout.id %}active white-text{% else %}black-text{% endif %}">{{ workout.title }}</a>
                     {% endfor %}
                 {% endif %}
             </div>
         </div>
         <!-- Middle section: Selected workout details -->
-        <div class="col s12 m4" style="height: 92vh; background-color: rgb(105, 103, 107);">
+      
+      <div class="col s12 m4" style="height: 92vh; background-color: #373d4e;">  
             <h5>Selected Workout:</h5>
             {% if selected_workout %}
                 <h4>{{ selected_workout.title }}</h4>
@@ -73,10 +74,10 @@
 
 
         <!-- SELECTED_ROUTINE -->
-        <div class="col s12 m3" style="height: 92vh; background-color: rgb(11, 184, 39);  overflow-y: scroll;">   
-            <h4>Selected Routine:</h4>
+        <div class="col s12 m3" style="height: 92vh; background-color: #373d4e;  overflow-y: scroll;">   
+            <h5>Selected Routine:</h5>
             {% if selected_routine %}
-                <p>Title: {{selected_routine.title}}</p> 
+                <h4>{{selected_routine.title}}</h4> 
                     {% for routine_workout in selected_routine.routine_workouts %}
                              
                             <li>
@@ -99,7 +100,7 @@
                     <!-- This removed a workout from the routine -->
                     <form action="/home" method="POST">
                         <input type="hidden" name="routine_workout_id" value="{{ routine_workout.id }}" />
-                        <button type="submit" class="btn red" name="delete_workout_from_routine" value="true">Delete</button>
+                        <button type="submit" class="btn red" name="delete_workout_from_routine" value="true">Delete This Workout</button>
                     </form>
 
                     
@@ -108,7 +109,7 @@
 
                 <form action="/home" method="POST" style="display:inline;">
                     <input type="hidden" name="routine_id" value="{{ selected_routine.id }}">
-                    <button type="submit" class="btn red" name="delete_routine" value="true">Delete Workout</button>
+                    <button type="submit" class="btn red" name="delete_routine" value="true">Delete Entire Routine</button>
                 </form>
 
         {% endif %}
@@ -134,7 +135,7 @@
             <ul class="collection">
                 <div class="collection-list"> 
                         {% for routine in user_routines %}
-                        <a href="/home?routine_id={{ routine.id }}{% if selected_workout %}&workout_id={{ selected_workout.id }}{% endif %}" class="collection-item {% if selected_routine and selected_routine.id == routine.id %}active{% endif %}">{{ routine.title }}</a>
+                        <a href="/home?routine_id={{ routine.id }}{% if selected_workout %}&workout_id={{ selected_workout.id }}{% endif %}" class="collection-item {% if selected_routine and selected_routine.id == routine.id %}active white-text{% else %}black-text{% endif %}">{{ routine.title }}</a>
                         {% endfor %}
             </ul>
         {% else %}
