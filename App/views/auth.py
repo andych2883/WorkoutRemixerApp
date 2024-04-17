@@ -36,6 +36,10 @@ def get_user_page():
 def identify_page():
     return render_template('message.html', title="Identify", message=f"You are logged in as {current_user.id} - {current_user.username}")
 
+@auth_views.route('/signup', methods=['GET'])
+def signup_page():
+    return render_template('signup.html')
+ 
 @auth_views.route('/signup', methods=['POST'])
 def signup_action():
     username = request.form.get('new_username')  
@@ -63,8 +67,6 @@ def signup_action():
     flash('Signup successful. Welcome!', 'success')
     set_access_cookies(response, token)
     return response
-
-
 
 @auth_views.route('/login', methods=['POST'])
 def login_action():
