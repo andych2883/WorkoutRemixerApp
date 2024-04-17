@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-  
+
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
      <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -23,7 +23,7 @@
         }
 
             .background-container {
-            
+
             background-image: url('static/page-back.jpg');
             background-size: cover;
             background-position: center;
@@ -51,8 +51,8 @@
             <div class="col s6 white-text" style="background-color: black; height: 97vh; opacity:0.7;" >
 
               <img src="static/letushelp.png" style="position: absolute; top: 50%; transform: translateY(-50%); width:45%;">
-              
-            
+
+
             </div>
 
             <!-- GYMRAT word logo -->
@@ -64,7 +64,6 @@
                   <div class="container"> 
                   <!-- style="position: absolute; top: 20%; transform: translateY(-50%); width:30%;" -->
                   <img class="responsive-img" src="static/GYMRAT.png" >
-                  
 
 
                   <!-- style="display: flex; justify-content: center; align-items: center; background-color: red; position:static;" -->
@@ -72,30 +71,45 @@
                     <form method="POST" action="/login" style="align-items: center; justify-content:center; background-color: black; opacity:0.8; padding: 4vh;"> 
                       <div class="row">
                         <div class="input-field col s12">
-                          <input placeholder="Username" value="bob" name="username" type="text" class="validate" required style="color: white;">
+                          <input placeholder="Username" value="" name="username" type="text" class="validate" required style="color: white;">
                           <label for="username"></label>
                         </div>
                       </div>
                       <div class="row">
                         <div class="input-field col s12">
-                          <input placeholder="Password"value="bobpass" name="password" type="password" class="validate" required style="color: white;">
+                          <input placeholder="Password" value="" name="password" type="password" class="validate" required style="color: white;">
                           <label for="password"></label>
                         </div>
                       </div>
                       <button style="color:black; background-color:white;" type="submit" class="btn waves-effect waves-light pulse">Login</button>
                     </form>
-                    </div>
+                    <!-- Signup form -->
+                    <form method="POST" action="/signup" style="align-items: center; justify-content:center; background-color: black; opacity:0.8; padding: 4vh;"> 
+                      <div class="row">
+                        <div class="input-field col s12">
+                          <input placeholder="New Username" name="new_username" type="text" class="validate" required style="color: white;">
+                          <label for="new_username"></label>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="input-field col s12">
+                          <input placeholder="New Password" name="new_password" type="password" class="validate" required style="color: white;">
+                          <label for="new_password"></label>
+                        </div>
+                      </div>
+                      <button style="color:black; background-color:white;" type="submit" class="btn waves-effect waves-light pulse">Signup</button>
+                    </form>
                   </div>
 
               </div>
-                
-                
+
+
 
             </div>
 
-          
-  
-          
+
+
+
 
 
     </div>

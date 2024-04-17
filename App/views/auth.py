@@ -44,6 +44,34 @@ def login_action():
         set_access_cookies(response, token) 
     return response
 
+@auth_views.route('/signup', methods=['POST'])
+def signup_action():
+    username = request.form.get('new_username')  
+    password = request.form.get('new_password') 
+
+    # Check if username already exists
+    existing_user = User.query.filter_by(username=username).first()
+    if existing_user:
+        flash('Username already exists. Please choose a different one.', 'error')
+        return redirect(url_for('auth_views.home_page'))
+
+    # Create new user
+    new_user = User(username=username, password=password)
+    db.session.add(new_user)
+    db.session.commit()
+
+    # Log in the new user
+    token = login(username, password)
+    if not token:
+        flash('Failed to log in after signup.', 'error')
+        return redirect(url_for('auth_views.home_page'))
+
+    # Redirect to home page
+    response = redirect(url_for('auth_views.home_page'))
+    flash('Signup successful. Welcome!', 'success')
+    set_access_cookies(response, token)
+    return response
+
 @auth_views.route('/home', methods=['GET', 'POST'])
 @jwt_required()
 def home_page():
