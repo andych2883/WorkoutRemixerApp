@@ -25,8 +25,8 @@
             <!-- Search form : MOVED TO NAVBAR
             <form action="/home" method="GET">
                 <div class="input-field">
-                    <input id="search" name="search" type="text" placeholder="Search Workouts by Title" value="{{ request.args.get('search') }}">
-                    <label for="search"></label>
+                    <input id="search" name="search" type="text" placeholder="Search Workouts by Title"
+                        value="{% if request.args.get('search') %}{{ request.args.get('search') }}{% endif %}">
                 </div>
                 <div class="input-field">
                     <button class="btn waves-effect waves-light" type="submit">Search</button>
@@ -154,13 +154,13 @@
 
 
 <script>
-function toggleCollapse(element) {
-    var collapsible = element.closest('li').querySelector('.collapsible');
-    if (collapsible.style.display === "none") {
-        collapsible.style.display = "block";
-    } else {
-        collapsible.style.display = "none";
+    function toggleCollapse(element) {
+        var collapsible = element.closest('li').querySelector('.collapsible');
+        if (collapsible.style.display === "none") {
+            collapsible.style.display = "block";
+        } else {
+            collapsible.style.display = "none";
+        }
     }
-}
 </script>
 {% endblock %}
