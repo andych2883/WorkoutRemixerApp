@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, jsonify, request, flash, send_from_directory, flash, redirect, url_for
 from flask_jwt_extended import jwt_required, current_user, unset_jwt_cookies, set_access_cookies, get_jwt_identity
+from werkzeug.security import generate_password_hash
 from werkzeug.urls import url_parse
 from sqlalchemy import or_
 from App.models import db
@@ -49,9 +50,11 @@ def signup_action():
     existing_user = User.query.filter_by(username=username).first()
     if existing_user:
         flash('Username already exists. Please choose a different one.', 'error')
-        return redirect(url_for('auth_views.home_page'))
+        return redirect(request.referrer or url_for('auth_views.signup_page')) # this line will force the redirect to x instead of the 401 page
 
     # Create new user
+    #hashed_password = generate_password_hash(password)
+    #new_user = User(username=username, password=hashed_password)
     new_user = User(username=username, password=password)
     db.session.add(new_user)
     db.session.commit()
@@ -182,8 +185,9 @@ def home_page():
 
 
 @auth_views.route('/logout', methods=['GET'])
+@jwt_required()
 def logout_action():
-    response = redirect(request.referrer or url_for('auth_views.home_page'))
+    response = redirect(url_for('auth_views.index_page'))
     flash("Logged Out!")
     unset_jwt_cookies(response)
     return response
@@ -208,6 +212,7 @@ def identify_user():
     return jsonify({'message': f"username: {current_user.username}, id : {current_user.id}"})
 
 @auth_views.route('/api/logout', methods=['GET'])
+@jwt_required()
 def logout_api():
     response = jsonify(message="Logged Out!")
     unset_jwt_cookies(response)
