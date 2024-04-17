@@ -27,6 +27,15 @@
                   <li><a href="/users">Users Jinja</a></li>
                   <li><a href="/identify">Routines</a></li> <!-- was Identify -->
                   <li><a href="/static/users">Users JS</a></li>
+                  </ul>
+                  
+                  <!-- Start/Stop/Reset Timer -->
+                  <ul id="nav-mobile">
+                    <li><a href="#" id="startStopTimer">Start Timer</a></li>
+                    <li><a href="#" id="resetTimer">Reset Timer</a></li>
+                    <!-- Timer Count Display -->
+                    <span id="timerDisplay">00:00:00</span>
+                  </ul>
                   {% endif %}
                   
               </ul>
@@ -69,7 +78,51 @@
               {% endfor %}
           {% endif %}
         {% endwith %}
+
+      // Timer functionality
+      let timerInterval;
+      let timerRunning = false;
+      let timerCount = 0;
+
+      // Start/Stop Timer
+      document.getElementById('startStopTimer').addEventListener('click', function() {
+          if (!timerRunning) {
+              timerInterval = setInterval(updateTimer, 1000);
+              timerRunning = true;
+              document.getElementById('startStopTimer').innerText = 'Stop Timer';
+          } else {
+              clearInterval(timerInterval);
+              timerRunning = false;
+              document.getElementById('startStopTimer').innerText = 'Start Timer';
+          }
+      });
+
+      // Reset Timer
+      document.getElementById('resetTimer').addEventListener('click', function() {
+          clearInterval(timerInterval);
+          timerRunning = false;
+          timerCount = 0;
+          document.getElementById('timerDisplay').innerText = '00:00:00';
+          document.getElementById('startStopTimer').innerText = 'Start Timer';
+      });
+
+      // Update Timer Function
+      function updateTimer() {
+          timerCount++;
+          let hours = Math.floor(timerCount / 3600);
+          let minutes = Math.floor((timerCount % 3600) / 60);
+          let seconds = timerCount % 60;
+          document.getElementById('timerDisplay').innerText = formatTime(hours) + ':' + formatTime(minutes) + ':' + formatTime(seconds);
+      }
+
+      // Format Time Function
+      function formatTime(time) {
+          return time < 10 ? '0' + time : time;
+      }
+
+      
        
     </script>
+    
   </body>
 </html>
