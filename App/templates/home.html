@@ -76,8 +76,42 @@
         <div class="col s12 m3" style="height: 92vh; background-color: rgb(11, 184, 39);  overflow-y: scroll;">   
             <h4>Selected Routine:</h4>
             {% if selected_routine %}
-                <p>Title: {{selected_routine.title}}</p>
-            {% endif %}
+                <p>Title: {{selected_routine.title}}</p> 
+                    {% for routine_workout in selected_routine.routine_workouts %}
+                             
+                            <li>
+                                <div class="collapsible-header">{{ routine_workout.workout.title }}</div>
+                                <div class="collapsible-body">
+                                    <form action="/home" method="POST">
+                                        <input type="hidden" name="routine_workout_id" value="{{ routine_workout.id }}">
+                                        <label for="reps">Reps:</label>
+                                        <input type="number" id="reps" name="reps" value="{{ routine_workout.reps }}" min="0">
+                                        <label for="sets">Sets:</label>
+                                        <input type="number" id="sets" name="sets" value="{{ routine_workout.sets }}" min="0">
+                                        <input type="hidden" name="action" value="update"> 
+                                        <button class="btn waves-effect waves-light" type="submit">Update</button>
+                                    </form>
+                                    <br>
+                                </div>
+                            </li>
+                        
+                    </ul>
+                    <!-- This removed a workout from the routine -->
+                    <form action="/home" method="POST">
+                        <input type="hidden" name="routine_workout_id" value="{{ routine_workout.id }}" />
+                        <button type="submit" class="btn red" name="delete_workout_from_routine" value="true">Delete</button>
+                    </form>
+
+                    
+                </li>
+                {% endfor %} 
+
+                <form action="/home" method="POST" style="display:inline;">
+                    <input type="hidden" name="routine_id" value="{{ selected_routine.id }}">
+                    <button type="submit" class="btn red" name="delete_routine" value="true">Delete Workout</button>
+                </form>
+
+        {% endif %}
         </div>
 
 

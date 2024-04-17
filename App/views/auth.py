@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, jsonify, request, flash, send_from_directory, flash, redirect, url_for
 from flask_jwt_extended import jwt_required, current_user, unset_jwt_cookies, set_access_cookies, get_jwt_identity
+from werkzeug.urls import url_parse
 from sqlalchemy import or_
 from App.models import db
 from App.database import db
@@ -67,6 +68,7 @@ def login_action():
         set_access_cookies(response, token) 
     return response
 
+
 @auth_views.route('/home', methods=['GET', 'POST'])
 @jwt_required()
 def home_page():
@@ -84,7 +86,7 @@ def home_page():
             Routine.query.filter_by(id=routine_id).delete()
             db.session.commit()
             flash('Routine deleted successfully.', 'success')
-            return redirect(request.referrer or url_for('auth_views.home_page'))
+            return redirect(url_for('auth_views.home_page'))
 
         if 'delete_workout_from_routine' in request.form:
             routine_workout_id = request.form.get('routine_workout_id')
@@ -157,15 +159,13 @@ def home_page():
             selected_workout = Workout.query.get_or_404(workout_id)
         workouts = Workout.query.all()
 
-    return render_template('home.html', workouts=workouts, selected_workout=selected_workout, user_routines=user_routines, is_authenticated=True)
-
-    
     routine_id = request.args.get('routine_id', type=int)
     
     if routine_id:
         selected_routine = Routine.query.get_or_404(routine_id)
-   
-    return render_template('home.html', workouts=workouts, selected_workout=selected_workout, user_routines=user_routines, selected_routine=selected_routine)
+
+    return render_template('home.html', workouts=workouts, selected_workout=selected_workout, user_routines=user_routines, selected_routine=selected_routine, is_authenticated=True)
+
 
 
 @auth_views.route('/logout', methods=['GET'])
@@ -199,3 +199,8 @@ def logout_api():
     response = jsonify(message="Logged Out!")
     unset_jwt_cookies(response)
     return response
+
+@auth_views.route('/', defaults={'path': ''})
+@auth_views.route('/<path:path>')
+def catch_all(path):
+    return redirect(url_for('auth_views.home_page'))
