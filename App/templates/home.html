@@ -38,13 +38,14 @@
             <div class="collection">
                 {% if workouts %}
                     {% for workout in workouts %}
-                    <a href="/home?workout_id={{ workout.id }}{% if selected_routine %}&routine_id={{ selected_routine.id }}{% endif %}" class="collection-item {% if selected_workout and selected_workout.id == workout.id %}active{% endif %}">{{ workout.title }}</a>
+                    <a href="/home?workout_id={{ workout.id }}{% if selected_routine %}&routine_id={{ selected_routine.id }}{% endif %}" class="collection-item {% if selected_workout and selected_workout.id == workout.id %}active white-text{% else %}black-text{% endif %}">{{ workout.title }}</a>
                     {% endfor %}
                 {% endif %}
             </div>
         </div>
         <!-- Middle section: Selected workout details -->
-        <div class="col s12 m4" style="height: 92vh; background-color: rgb(105, 103, 107);">
+      
+      <div class="col s12 m4" style="height: 92vh; background-color: #373d4e;">  
             <h5>Selected Workout:</h5>
             {% if selected_workout %}
                 <h4>{{ selected_workout.title }}</h4>
@@ -57,9 +58,15 @@
                 <form action="/home" method="POST">
                     <input type="hidden" name="workout_id" value="{{ selected_workout.id }}">
                     <label for="reps">Reps:</label>
-                    <input type="number" id="reps" name="reps" value="0">
+                    <input type="number" id="reps" name="reps" value="0" min="0">
                     <label for="sets">Sets:</label>
-                    <input type="number" id="sets" name="sets" value="0">
+                    <input type="number" id="sets" name="sets" value="0" min="0">
+                    <select name="routine_id" required>
+                        <option value="" disabled selected>Select Routine</option>
+                        {% for routine in user_routines %}
+                            <option value="{{ routine.id }}">{{ routine.title }}</option>
+                        {% endfor %}
+                    </select>
                     <button class="btn waves-effect waves-light" type="submit">Add to Routine</button>
                 </form>
             {% endif %}
@@ -67,11 +74,45 @@
 
 
         <!-- SELECTED_ROUTINE -->
-        <div class="col s12 m3" style="height: 92vh; background-color: rgb(11, 184, 39);  overflow-y: scroll;">   
-            <h4>Selected Routine:</h4>
+        <div class="col s12 m3" style="height: 92vh; background-color: #373d4e;  overflow-y: scroll;">   
+            <h5>Selected Routine:</h5>
             {% if selected_routine %}
-                <p>Title: {{selected_routine.title}}</p>
-            {% endif %}
+                <h4>{{selected_routine.title}}</h4> 
+                    {% for routine_workout in selected_routine.routine_workouts %}
+                             
+                            <li>
+                                <div class="collapsible-header">{{ routine_workout.workout.title }}</div>
+                                <div class="collapsible-body">
+                                    <form action="/home" method="POST">
+                                        <input type="hidden" name="routine_workout_id" value="{{ routine_workout.id }}">
+                                        <label for="reps">Reps:</label>
+                                        <input type="number" id="reps" name="reps" value="{{ routine_workout.reps }}" min="0">
+                                        <label for="sets">Sets:</label>
+                                        <input type="number" id="sets" name="sets" value="{{ routine_workout.sets }}" min="0">
+                                        <input type="hidden" name="action" value="update"> 
+                                        <button class="btn waves-effect waves-light" type="submit">Update</button>
+                                    </form>
+                                    <br>
+                                </div>
+                            </li>
+                        
+                    </ul>
+                    <!-- This removed a workout from the routine -->
+                    <form action="/home" method="POST">
+                        <input type="hidden" name="routine_workout_id" value="{{ routine_workout.id }}" />
+                        <button type="submit" class="btn red" name="delete_workout_from_routine" value="true">Delete This Workout</button>
+                    </form>
+
+                    
+                </li>
+                {% endfor %} 
+
+                <form action="/home" method="POST" style="display:inline;">
+                    <input type="hidden" name="routine_id" value="{{ selected_routine.id }}">
+                    <button type="submit" class="btn red" name="delete_routine" value="true">Delete Entire Routine</button>
+                </form>
+
+        {% endif %}
         </div>
 
 
@@ -91,54 +132,16 @@
 
             <h4>Your Routines</h4>
             {% if user_routines %}
-                <ul class="collection">
-                    <div class="collection-list"> 
-                            {% for routine in user_routines %}
-                            <a href="/home?routine_id={{ routine.id }}{% if selected_workout %}&workout_id={{ selected_workout.id }}{% endif %}" class="collection-item {% if selected_routine and selected_routine.id == routine.id %}active{% endif %}">{{ routine.title }}</a>
-
-
-                            <!--   <li class="collection-item">
-                                    <div>{{ routine.title }}
-                                        <a href="#!" class="secondary-content"><i class="material-icons">expand_more</i></a>
-                                    </div>
-                                    <ul class="collapsible" data-collapsible="accordion">
-                                        {% for workout in routine.workouts %}
-                                            <li>
-                                                <div class="collapsible-header">{{ workout.title }}</div>
-                                                <div class="collapsible-body">
-                                                    <form action="/home" method="POST">
-                                                        <input type="hidden" name="routine_id" value="{{ routine.id }}">
-                                                        <input type="hidden" name="workout_id" value="{{ workout.id }}">
-                                                        <label for="reps">Reps:</label>
-                                                        <input type="number" id="reps" name="reps" value="{{ workout.reps }}">
-                                                        <label for="sets">Sets:</label>
-                                                        <input type="number" id="sets" name="sets" value="{{ workout.sets }}">
-                                                        <button type="submit">Update</button>
-                                                    </form>
-                                                    <form action="/home" method="POST">
-                                                        <input type="hidden" name="routine_id" value="{{ routine.id }}">
-                                                        <input type="hidden" name="workout_id" value="{{ workout.id }}">
-                                                        <button type="submit">Delete</button>
-                                                    </form>
-                                                </div>
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
-                                </li> -->
-
-
-                            {% endfor %}
-                </ul>
-            {% else %}
-                <p>No routines found. Create a routine to get started.</p>
-            {% endif %}
+            <ul class="collection">
+                <div class="collection-list"> 
+                        {% for routine in user_routines %}
+                        <a href="/home?routine_id={{ routine.id }}{% if selected_workout %}&workout_id={{ selected_workout.id }}{% endif %}" class="collection-item {% if selected_routine and selected_routine.id == routine.id %}active white-text{% else %}black-text{% endif %}">{{ routine.title }}</a>
+                        {% endfor %}
+            </ul>
+        {% else %}
+            <p>No routines found. Create a routine to get started.</p>
+        {% endif %}
         </div>
-
-        
-
-
-
-
     </div>
     {% else %}
     <div class="row">
@@ -150,4 +153,14 @@
 </div>
 
 
+<script>
+function toggleCollapse(element) {
+    var collapsible = element.closest('li').querySelector('.collapsible');
+    if (collapsible.style.display === "none") {
+        collapsible.style.display = "block";
+    } else {
+        collapsible.style.display = "none";
+    }
+}
+</script>
 {% endblock %}
