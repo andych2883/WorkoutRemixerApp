@@ -97,6 +97,19 @@
 
             <h4>Your Routines</h4>
             {% if user_routines %}
+            <ul class="collection">
+                <div class="collection-list"> 
+                        {% for routine in user_routines %}
+                        <a href="/home?routine_id={{ routine.id }}{% if selected_workout %}&workout_id={{ selected_workout.id }}{% endif %}" class="collection-item {% if selected_routine and selected_routine.id == routine.id %}active{% endif %}">{{ routine.title }}</a>
+                        {% endfor %}
+            </ul>
+        {% else %}
+            <p>No routines found. Create a routine to get started.</p>
+        {% endif %}
+
+
+            <!-- 
+            {% if user_routines %}
                 <ul class="collection">
                     {% for routine in user_routines %}
                         <li class="collection-item">
@@ -114,7 +127,7 @@
                                                 <input type="number" id="reps" name="reps" value="{{ routine_workout.reps }}" min="0">
                                                 <label for="sets">Sets:</label>
                                                 <input type="number" id="sets" name="sets" value="{{ routine_workout.sets }}" min="0">
-                                                <input type="hidden" name="action" value="update"> <!-- Add this hidden input -->
+                                                <input type="hidden" name="action" value="update"> 
                                                 <button class="btn waves-effect waves-light" type="submit">Update</button>
                                             </form>
                                             <br>
@@ -136,6 +149,7 @@
             {% else %}
                 <p>No routines found. Create a routine to get started.</p>
             {% endif %}
+            -->
         </div>
 
         
