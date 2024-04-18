@@ -20,7 +20,7 @@
     {% if is_authenticated %}
     <div class="row">
         <!-- Left section: Search bar and list of workouts -->
-        <div class="col s12 m6 l3" style="max-height: 92vh;  overflow-y: scroll; background-color:#494d5c;  border-radius: 20px;">
+        <div class="col s12 m6 l3" style="max-height: 92vh;  overflow-y: scroll; background-color:#494d5c;  border-radius: 20px; padding:30px;">
             <h5 class="header-text">Workouts</h5>
             <div class="collection">
                 {% if workouts %}
@@ -35,8 +35,8 @@
         <!-- Middle section: Selected workout details -->
       
         <!-- background-color: #373d4e; -->
-      <div class="col s12 m6 l3" style="height: 92vh; background-color: #292d3a; border-radius: 20px; color:white; font-family:'Baskerville', Tahoma, Geneva, Verdana, sans-serif;
-      text-align: center; font-size: large;">  
+      <div class="col s12 m6 l3" style="height: 92vh; background-color: #292d3a; border-radius: 20px; color:white; font-family: 'Tahoma', Geneva, Verdana, sans-serif;
+      text-align: center; font-size: large; padding:30px;">  
             <h5 class="header-text">Selected Workout:</h5>
             {% if selected_workout %}
                 <h4>{{ selected_workout.title }}</h4>
@@ -71,8 +71,8 @@
 
 
         <!-- SELECTED_ROUTINE -->
-        <div class="col s12 m6 l3" style="height: 92vh; background-color: #292d3a; border-radius: 20px; font-family:'Baskerville', Tahoma, Geneva, Verdana, sans-serif;
-        text-align: center; font-size: large;">   
+        <div class="col s12 m6 l3" style="height: 92vh; background-color: #292d3a; border-radius: 20px; font-family: 'Tahoma', Geneva, Verdana, sans-serif;
+        text-align: center; font-size: large; padding:30px;">   
             <h5 class="header-text">Selected Routine:</h5>
             {% if selected_routine %}
                 <h4 style="color:white">{{selected_routine.title}}</h4> 
@@ -124,7 +124,7 @@
 
 
         <!-- Right section: User routines CREATION and management -->
-        <div class="col s12 m6 l3" style="height:92vh; background-color: #494d5c;  border-radius: 20px; display:flex; flex-direction: column;" >
+        <div class="col s12 m6 l3" style="height:92vh; background-color: #494d5c;  border-radius: 20px; display:flex; flex-direction: column; padding:30px;" >
 
             
             <h5 class="header-text">Create Routine</h5>
