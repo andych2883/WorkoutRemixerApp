@@ -134,6 +134,7 @@ def home_page():
             workout_id = request.form.get('workout_id')
             reps = request.form.get('reps', type=int)
             sets = request.form.get('sets', type=int)
+            #print(f"routine_id: {routine_id}, reps: {reps}, sets: {sets}.")
 
             if not reps or not sets or not routine_id:
                 flash('Please ensure all fields are filled out correctly. Reps and Sets must be above 0, and a Routine must be selected.', 'error')
