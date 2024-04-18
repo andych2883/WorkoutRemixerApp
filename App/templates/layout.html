@@ -2,10 +2,6 @@
 <html>
   <head>
   
-<!doctype html>
-<html>
-  <head>
-  
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
      <!--Import Google Icon Font-->
      <!--Import Google Icon Font-->
@@ -21,8 +17,12 @@
 
   <style>
 
+    .app-content {
+      background-color: #191C24; 
+    }
     .nav-wrapper{
       background-color: #191C24;
+      display:inline;
     }
 
 
@@ -42,68 +42,88 @@
         border:0;
     }
 
+    .header-text{
+    color:white;
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size:xx-large;
+    background-color: black;
+    height:5vh;
+    margin-top:9px;
+    padding-top: 5px;
+    border-radius: 10px;
+}
+
+.green-button {
+  background-color: #04AA6D; 
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-top:20px;
+  border-radius: 12px;
+}
+
+  .green-button:hover{
+    font-size:large;
 
 
+ }
+
+ .red-button {
+  background-color: #e91e17; 
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-top:20px;
+  border-radius: 12px;
+}
+
+  .red-button:hover{
+    font-size:large;
 
 
+ }
   </style>
-
-
 
   <body>
     
-    <nav>
-          <div class="nav-wrapper">
+    <nav style=" background-color: #191C24;">
+           <div class="nav-wrapper">
               <a href="#!" class="brand-logo center">{% block page %}{% endblock %}</a>
-              <ul id="nav-mobile" class="left">
+                <ul id="nav-mobile" class="left">
 
-
-                {% if is_authenticated %}
-                
-                <!--<li><a href="/home">Home</a></li>
-                  <li><a href="/users">Users Jinja</a></li>
-                  <li><a href="/identify">Routines</a></li> 
-                  <li><a href="/static/users">Users JS</a></li>
-                  <li> -->
-                
+                    {% if is_authenticated %}
+                    <li>
                     <form action="/home" method="GET"> 
                       <div class="input-field">
                           <input id="search" type="search" name="search" placeholder="Search Workouts" value="{{ request.args.get('search' )}}"style="height: 3vh; background-color: white; color: black; margin-top:2vh; border-radius:20px;">
-                          <!-- <label class="label-icon" for="search" style="color:#5B42F3;"><i class="material-icons">search</i></label>
-                          <i class="material-icons" style="color:#00DDEB ">close</i> -->
                       </div>
                     </form>
-                </li>
-                  </ul>
-                  
-                  <!-- Start/Stop/Reset Timer -->
-                  <ul id="nav-mobile">
-                    <li><a href="#" id="startStopTimer">Start Timer</a></li>
-                    <li><a href="#" id="resetTimer">Reset Timer</a></li>
-                    <!-- Timer Count Display -->
-                    <span id="timerDisplay">00:00:00</span>
-                  </ul>
+                    </li>
+
+                     <!-- Start/Stop/Reset Timer <ul id="nav-mobile">   </ul>  -->
+                    
+                      <li><a href="#" id="startStopTimer">Start Timer</a></li>
+                      <li><a href="#" id="resetTimer">Reset Timer</a></li>
+                      <!-- Timer Count Display -->
+                      <span id="timerDisplay">00:00:00</span>
                   {% endif %}
-                  
-              </ul>
-              {% if is_authenticated %}
-              <ul id="nav-mobile" class="right">
-                <li><a href="/logout">Logout</a></li>
-              </ul>
-              {% else %}
-              <form class="right navbar-form" method="POST" action="/login" style="display: flex; flex-wrap: nowrap; align-items: center; margin-right: 10px;">
-                  <div class="input-field" style="margin-right: 10px;">
-                      <input placeholder="username" value="bob" name="username" type="text" class="validate" required>
-                      <label for="username">username</label>
-                  </div>
-                  <div class="input-field" style="margin-right: 10px;">
-                      <input placeholder="password"value="bobpass" name="password" type="password" class="validate" required>
-                      <label for="password">Password</label>
-                  </div>
-                  <button type="submit" class="btn waves-effect waves-light">Login</button>
-              </form>
-              {% endif %}
-              
+                </ul>
+            </div> 
+
+            {% if is_authenticated %}
+                      <ul id="nav-mobile" class="right">
+                      <li><a href="/logout">Logout</a></li>
+                      </ul>
+                      {% endif%}
           </div>
       </nav>
       <style>
@@ -112,7 +132,8 @@
           }
       </style>
 
-    <div id="content" style="background-color: #191C24;">{% block content %}{% endblock %}</div> <!-- removed: class="container", removed 70% restriction onscreen-->
+    <!-- CONTROLS THE BLOCK CONTENT OF THE OTHER PAGES -->
+    <div id="content" class="app-content">{% block content %}{% endblock %}</div> <!-- removed: class="container", removed 70% restriction onscreen-->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>

@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block title %}Home{% endblock %}
-{% block page %}Home{% endblock %}
+{% block page %}{% endblock %}
 
 {% block styles %}
 <style>
@@ -8,6 +8,7 @@
     margin: 0;
     padding: 0;
 }
+
 </style>
 
 {% endblock %}
@@ -15,26 +16,12 @@
 {% block content %}
 
 
-<div class="row" style="overflow-y: hidden;">
+<div class="row">
     {% if is_authenticated %}
     <div class="row">
         <!-- Left section: Search bar and list of workouts -->
-        <div class="col s12 m3" style="max-height: 90vh;  overflow-y: scroll;">
-
-
-            <!-- Search form : MOVED TO NAVBAR
-            <form action="/home" method="GET">
-                <div class="input-field">
-                    <input id="search" name="search" type="text" placeholder="Search Workouts by Title"
-                        value="{% if request.args.get('search') %}{{ request.args.get('search') }}{% endif %}">
-                </div>
-                <div class="input-field">
-                    <button class="btn waves-effect waves-light" type="submit">Search</button>
-                </div>
-            </form>
-        -->
-
-            <h4>Workouts</h4>
+        <div class="col s12 m6 l3" style="max-height: 92vh;  overflow-y: scroll; background-color:#494d5c;  border-radius: 20px;">
+            <h5 class="header-text">Workouts</h5>
             <div class="collection">
                 {% if workouts %}
                     {% for workout in workouts %}
@@ -43,20 +30,29 @@
                 {% endif %}
             </div>
         </div>
+
+
         <!-- Middle section: Selected workout details -->
       
-      <div class="col s12 m4" style="height: 92vh; background-color: #373d4e;">  
-            <h5>Selected Workout:</h5>
+        <!-- background-color: #373d4e; -->
+      <div class="col s12 m6 l3" style="height: 92vh; background-color: #292d3a; border-radius: 20px; color:white; font-family:'Baskerville', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center; font-size: large;">  
+            <h5 class="header-text">Selected Workout:</h5>
             {% if selected_workout %}
                 <h4>{{ selected_workout.title }}</h4>
-                <p>{{ selected_workout.description }}</p>
+                {% if selected_workout.description %}
+                    <p>{{ selected_workout.description }}</p>  <!-- This will hide the empty description boxes -->
+                {% endif %}
+                <!-- <p>{{ selected_workout.description }}</p> -->
                 <p>Type: {{ selected_workout.type }}</p>
                 <p>Body Part: {{ selected_workout.body_part }}</p>
                 <p>Equipment: {{ selected_workout.equipment }}</p>
                 <p>Level: {{ selected_workout.level }}</p>
                 <!-- Add other workout details here -->
                 <form action="/home" method="POST">
-                    <input type="hidden" name="workout_id" value="{{ selected_workout.id }}">
+                    <div style="background-color: rgb(255, 255, 255); border-radius: 10px; justify-content: center; align-items: center; padding: 20px;
+                    font-family: 'Baskerville', Tahoma, Geneva, Verdana, sans-serif;"> 
+                    <input type="hidden" style="width:50%;" name="workout_id" value="{{ selected_workout.id }}">
                     <label for="reps">Reps:</label>
                     <input type="number" id="reps" name="reps" value="0" min="0">
                     <label for="sets">Sets:</label>
@@ -67,80 +63,103 @@
                             <option value="{{ routine.id }}">{{ routine.title }}</option>
                         {% endfor %}
                     </select>
-                    <button class="btn waves-effect waves-light" type="submit">Add to Routine</button>
+                    <button class="green-button" type="submit">Add to Routine</button>
+                    </div>
                 </form>
             {% endif %}
         </div>
 
 
         <!-- SELECTED_ROUTINE -->
-        <div class="col s12 m3" style="height: 92vh; background-color: #373d4e;  overflow-y: scroll;">   
-            <h5>Selected Routine:</h5>
+        <div class="col s12 m6 l3" style="height: 92vh; background-color: #292d3a; border-radius: 20px; font-family:'Baskerville', Tahoma, Geneva, Verdana, sans-serif;
+        text-align: center; font-size: large;">   
+            <h5 class="header-text">Selected Routine:</h5>
             {% if selected_routine %}
-                <h4>{{selected_routine.title}}</h4> 
-                <ul class="collapsible" data-collapsible="accordion">
-                    {% for routine_workout in selected_routine.routine_workouts %}
-                    <li>
-                        <div class="collapsible-header">{{ routine_workout.workout.title }}</div>
-                        <div class="collapsible-body">
-                            <form action="/home" method="POST">
-                                <input type="hidden" name="routine_workout_id" value="{{ routine_workout.id }}">
-                                <label for="reps">Reps:</label>
-                                <input type="number" id="reps" name="reps" value="{{ routine_workout.reps }}"
-                                    min="0">
-                                <label for="sets">Sets:</label>
-                                <input type="number" id="sets" name="sets" value="{{ routine_workout.sets }}"
-                                    min="0">
-                                <input type="hidden" name="action" value="update"> <!-- Add this hidden input -->
-                                <button class="btn waves-effect waves-light" type="submit">Update</button>
-                            </form>
-                            <br>
-                            <form action="/home" method="POST">
-                                <input type="hidden" name="routine_workout_id" value="{{ routine_workout.id }}" />
-                                <button type="submit" class="btn red" name="delete_workout_from_routine"
-                                    value="true">Delete</button>
-                            </form>
-                        </div>
-                    </li>
-                    {% endfor %}
-                </ul>
+                <h4 style="color:white">{{selected_routine.title}}</h4> 
 
+               <!-- <div style="background-color: rgb(255, 255, 255); border-radius: 20px; justify-content: center; align-items: center; padding: 5px;
+                    font-family: 'Baskerville', Tahoma, Geneva, Verdana, sans-serif;"> -->
+
+                    <div>
+                        <ul class="collapsible" data-collapsible="accordion" style="background-color: white; border-radius: 10px;">
+                            {% for routine_workout in selected_routine.routine_workouts %}
+                            <li>
+
+                                <!-- add an active class tag? -->
+                                <div class="collapsible-header no-shadow" style="background-color: white; border-radius: 10px;">{{ routine_workout.workout.title }}</div>
+                                <div class="collapsible-body no-shadow"style="background-color: white; border-radius: 10px;">
+                                    <form action="/home" method="POST">
+
+                                        <input type="hidden" name="routine_workout_id" value="{{ routine_workout.id }}">
+
+                                        <label for="reps">Reps:</label>
+                                        <input type="number" id="reps" name="reps" value="{{ routine_workout.reps }}"
+                                            min="0">
+                                        <label for="sets">Sets:</label>
+                                        <input type="number" id="sets" name="sets" value="{{ routine_workout.sets }}"
+                                            min="0">
+                                        <input type="hidden" name="action" value="update"> <!-- Add this hidden input -->
+                                        <button class="green-button" type="submit">Update</button>
+                                    </form>
+                                    <br>
+                                    <form action="/home" method="POST">
+                                        <input type="hidden" name="routine_workout_id" value="{{ routine_workout.id }}" />
+                                        <button type="submit" class="red-button" name="delete_workout_from_routine"
+                                            value="true">Delete</button>
+                                    </form>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                </div>        
                    
+                <div style="margin-top:30px;">
                 <form action="/home" method="POST" style="display:inline;">
                     <input type="hidden" name="routine_id" value="{{ selected_routine.id }}">
-                    <button type="submit" class="btn red" name="delete_routine" value="true">Delete Entire Routine</button>
+                    <button type="submit" class="red-button" name="delete_routine" value="true">Delete Entire Routine</button>
                 </form>
-
+                </div>
         {% endif %}
         </div>
 
 
         <!-- Right section: User routines CREATION and management -->
-        <div class="col s12 m2" style="height: 92vh; background-color: rgb(65, 127, 156);  overflow-y: scroll;" >
+        <div class="col s12 m6 l3" style="height:92vh; background-color: #494d5c;  border-radius: 20px; display:flex; flex-direction: column;" >
 
-
-            <h4>Create Routine</h4>
+            
+            <h5 class="header-text">Create Routine</h5>
+            
+            <div style="padding:30px;">
             <form action="/home" method="POST">
                 <div class="input-field">
-                    <input id="routine_title" name="routine_title" type="text" placeholder="Routine Title">
+                    <input id="routine_title" style="text-align: center;" name="routine_title" type="text" placeholder="Routine Title">
                     <label for="routine_title"></label>
                 </div>
-                <button class="btn waves-effect waves-light" type="submit">Create Routine</button>
+
+                <div style="align-items:center; justify-content: center; display:flex; flex-direction: column;"><button class="green-button" type="submit">Create Routine</button></div>
+                
+                
+
             </form>
+            </div>
 
 
-            <h4>Your Routines</h4>
-            {% if user_routines %}
-            <ul class="collection">
-                <div class="collection-list"> 
-                        {% for routine in user_routines %}
-                        <a href="/home?routine_id={{ routine.id }}{% if selected_workout %}&workout_id={{ selected_workout.id }}{% endif %}" class="collection-item {% if selected_routine and selected_routine.id == routine.id %}active white-text{% else %}black-text{% endif %}">{{ routine.title }}</a>
-                        {% endfor %}
-            </ul>
-        {% else %}
-            <p>No routines found. Create a routine to get started.</p>
-        {% endif %}
-        </div>
+            <h5 class="header-text" style="margin-top: 5vh;">Your Routines</h5>
+                 <div> 
+                    {% if user_routines %}
+                    <div style="margin-top: 2vh;">
+                    <ul class="collection" style="background-color: white; border-radius: 10px;">
+                        <div class="collection-list" style="background-color: white; border-radius: 10px;"> 
+                                {% for routine in user_routines %}
+                                <a href="/home?routine_id={{ routine.id }}{% if selected_workout %}&workout_id={{ selected_workout.id }}{% endif %}" class="collection-item {% if selected_routine and selected_routine.id == routine.id %}active white-text{% else %}black-text{% endif %}">{{ routine.title }}</a>
+                                {% endfor %}
+                        </div>
+                    </ul>
+                    {% else %}
+                        <p>No routines found. Create a routine to get started.</p>
+                    </div>
+                    {% endif %}
+                </div>
     </div>
     {% else %}
     <div class="row">
