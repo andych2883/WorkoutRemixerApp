@@ -98,14 +98,18 @@
     <nav style=" background-color: #191C24;">
            <div class="nav-wrapper">
               <a href="#!" class="brand-logo center">{% block page %}{% endblock %}</a>
-                <ul id="nav-mobile" class="left">
+                <ul id="nav-mobile" class="left" style="display:inline-flex;">
 
                     {% if is_authenticated %}
                     <li>
                     <form action="/home" method="GET"> 
                       <div class="input-field">
-                        <input id="search" type="search" name="search" placeholder="Search Workouts" value="{% if request.args.get('search') != None %}{{ request.args.get('search') }}{% endif %}" style="height: 3vh; background-color: white; color: black; margin-top: 2vh; border-radius: 20px;">
-                      </div>
+                        
+                        <input id="search" type="search" name="search" placeholder="Search Workouts" value="{% if request.args.get('search') != None %}{{ request.args.get('search') }}{% endif %}" style="height: 3vh; background-color: white; color: black; margin-top: 2vh;
+                         border-radius: 20px; max-width: 10vw; width: 100%;">
+
+                         </div>
+                      
                     </form>
                     </li>
 
